@@ -10,3 +10,23 @@
  * for your subtheme grows. Please read the README.txt in the /preprocess and /process subfolders
  * for more information on this topic.
  */
+
+/**
+ * Override or insert variables into the page template.
+ */
+function compareWeight($a, $b)
+{
+    return @strcmp($b['settings']['weight'], @$a['settings']['weight']);
+}
+
+/**
+ * Override or insert variables into the page template.
+ */
+function omega_sr_preprocess_page(&$variables)
+{
+    if (theme_get_setting('slider-show', 'omega_sr') == "rev") {
+
+    include 'js/rs-plugin/RevolutionSlider.build.inc';
+  }
+
+}

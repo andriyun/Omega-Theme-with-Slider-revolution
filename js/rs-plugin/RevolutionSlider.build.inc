@@ -1,13 +1,13 @@
 <?php
-		$settings['slider'] = theme_get_setting('slider', 'hoteldiamond');
+		$settings['slider'] = theme_get_setting('slider', 'omega_sr');
 
 		if( !empty( $settings['slider']['layers']))
 		{
-        $settings['slider'] = theme_get_setting('slider', 'hoteldiamond');
+        $settings['slider'] = theme_get_setting('slider', 'omega_sr');
 
 
 
-		//hoteldiamond Slider variables
+		//omega_sr Slider variables
         $Slider             = $settings['slider']['layers'];
         @usort($Slider, 'compareWeight');
         $variables['page']['revslider']['slider_container'] = array(
@@ -42,7 +42,7 @@
                     );
 
 					if($settings['slider']['lazyload'] == 'on') {
-						$SliderItemBackgroundMarkup = "<img src='" . base_path() . drupal_get_path('theme', 'hoteldiamond') . "/js/rs-plugin/images/dummy.png' data-lazyload='" . file_create_url($SliderItem['background']) . "'/>";
+						$SliderItemBackgroundMarkup = "<img src='" . base_path() . drupal_get_path('theme', 'omega_sr') . "/js/rs-plugin/images/dummy.png' data-lazyload='" . file_create_url($SliderItem['background']) . "'/>";
 					}else {
 						$SliderItemBackgroundMarkup = "<img src='" . @file_create_url($SliderItem['background']) . "'/>";
 					}

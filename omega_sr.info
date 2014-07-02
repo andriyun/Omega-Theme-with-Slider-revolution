@@ -349,3 +349,13 @@ settings[alpha_region_footer_second_suffix] = ''
 settings[alpha_region_footer_second_weight] = '2'
 settings[alpha_region_footer_second_css] = ''
 version = '1.x'
+
+
+;REVOLUTION BANNER CSS SETTINGS
+stylesheets[all][] = js/rs-plugin/css/font-style.css
+stylesheets[all][] = js/rs-plugin/css/settings.css
+
+scripts[] = js/rs-plugin/jquery.themepunch.plugins.min.js
+scripts[] = js/rs-plugin/jquery.themepunch.revolution.min.js
+
+settings[slider-show] = rev

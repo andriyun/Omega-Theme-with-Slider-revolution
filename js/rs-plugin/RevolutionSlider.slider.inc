@@ -113,16 +113,18 @@ $arrTransitions   = array(
 for ($i = 0; $i <= 50; $i++) {
     $options['weight'][$i] = $i;
 }
+global $user;
 $form['slider']                      = array(
     '#type' => 'fieldset',
-  	   '#title' => "<div class='rev-image'><img src=" .base_path(). drupal_get_path('theme', 'hoteldiamond') . "/images/rev-logo.png" . " /></div>",
+  	   '#title' => "<div class='rev-image'><img src=" .base_path(). drupal_get_path('theme', 'omega_sr') . "/images/rev-logo.png" . " /></div>",
     '#collapsible' => FALSE,
     '#collapsed' => FALSE,
     '#group' => 'settings',
     '#tree' => TRUE,
-    '#weight' => 0,
+    '#weight' => -10,
     '#prefix' => '<div id="layers">',
-    '#suffix' => '</div>'
+    '#suffix' => '</div>',
+    '#access' => user_access('slider revolution settings')
 );
 $form['slider']['buttons']           = array(
     '#type' => 'fieldset',
@@ -136,7 +138,7 @@ $form['slider']['buttons']['add']    = array(
     '#value' => t('New Slide'),
     '#name' => 'create',
     '#submit' => array(
-        'hoteldiamond_slide_iupd'
+        'omega_sr_slide_iupd'
     ),
     '#attributes' => array(
         'class' => array(
@@ -280,7 +282,7 @@ if (isset($settings['slider']['layers'])) {
             '#value' => t('Add Layer: Text/HTML'),
             '#name' => "create-sublayer-" . $SlideId,
             '#submit' => array(
-                'hoteldiamond_sublayer_create'
+                'omega_sr_sublayer_create'
             ),
             '#attributes' => array(
                 'class' => array(
@@ -294,7 +296,7 @@ if (isset($settings['slider']['layers'])) {
             '#value' => t('Add Layer: Image'),
             '#name' => "create-sublayer-" . $SlideId,
             '#submit' => array(
-                'hoteldiamond_sublayer_create'
+                'omega_sr_sublayer_create'
             ),
             '#attributes' => array(
                 'class' => array(
@@ -307,7 +309,7 @@ if (isset($settings['slider']['layers'])) {
             '#value' => t('Add Layer: Video'),
             '#name' => "create-sublayer-" . $SlideId,
             '#submit' => array(
-                'hoteldiamond_sublayer_create'
+                'omega_sr_sublayer_create'
             ),
             '#attributes' => array(
                 'class' => array(
@@ -321,7 +323,7 @@ if (isset($settings['slider']['layers'])) {
             '#name' => "delete-" . $SlideId,
             '#default_value' => t('Delete Slide'),
             '#submit' => array(
-                'hoteldiamond_slide_iupd'
+                'omega_sr_slide_iupd'
             ),
             '#attributes' => array(
                 'class' => array(
@@ -523,13 +525,13 @@ if (isset($settings['slider']['layers'])) {
                 $slw      = $sublayer['weight'];
                 switch ($type) {
                     case 'text-html':
-                        $form['slider']['layers'][$SlideId]['sublayers'][$LayerId] = _hoteldiamond_slider_text_html_form($sublayer, $SlideId, $LayerId, $arrAnimations, $arrEasing, $arrEndAnimations, $id_class, $options, $slx, $sly, $arrStyles);
+                        $form['slider']['layers'][$SlideId]['sublayers'][$LayerId] = _omega_sr_slider_text_html_form($sublayer, $SlideId, $LayerId, $arrAnimations, $arrEasing, $arrEndAnimations, $id_class, $options, $slx, $sly, $arrStyles);
                         break;
                     case 'image':
-                        $form['slider']['layers'][$SlideId]['sublayers'][$LayerId] = _hoteldiamond_slider_image_form($sublayer, $SlideId, $LayerId, $arrAnimations, $arrEasing, $arrEndAnimations, $id_class, $options, $slx, $sly);
+                        $form['slider']['layers'][$SlideId]['sublayers'][$LayerId] = _omega_sr_slider_image_form($sublayer, $SlideId, $LayerId, $arrAnimations, $arrEasing, $arrEndAnimations, $id_class, $options, $slx, $sly);
                         break;
                     case 'video':
-                        $form['slider']['layers'][$SlideId]['sublayers'][$LayerId] = _hoteldiamond_slider_video_form($sublayer, $SlideId, $LayerId, $arrAnimations, $arrEasing, $arrEndAnimations, $id_class, $options, $slx, $sly, $arrStyles);
+                        $form['slider']['layers'][$SlideId]['sublayers'][$LayerId] = _omega_sr_slider_video_form($sublayer, $SlideId, $LayerId, $arrAnimations, $arrEasing, $arrEndAnimations, $id_class, $options, $slx, $sly, $arrStyles);
                         break;
                 }
                 $content               = '<div style="position:absolute;left:' . $slx . 'px;top:' . $sly . 'px;z-index:' . $slw . '" id="' . $id_class . '" class="sublayer">';
@@ -571,7 +573,7 @@ if (isset($settings['slider']['layers'])) {
         );
     }
 }
-function _hoteldiamond_slider_type($sublayer)
+function _omega_sr_slider_type($sublayer)
 {
     $type_form = array(
         '#type' => 'hidden',
@@ -579,7 +581,7 @@ function _hoteldiamond_slider_type($sublayer)
     );
     return $type_form;
 }
-function _hoteldiamond_slider_action_container($SlideId, $LayerId)
+function _omega_sr_slider_action_container($SlideId, $LayerId)
 {
     $action_container_form = array(
         '#type' => 'container',
@@ -588,11 +590,11 @@ function _hoteldiamond_slider_action_container($SlideId, $LayerId)
                 'hide'
             )
         ),
-        'delete' => _hoteldiamond_slider_action_container_delete($SlideId, $LayerId)
+        'delete' => _omega_sr_slider_action_container_delete($SlideId, $LayerId)
     );
     return $action_container_form;
 }
-function _hoteldiamond_slider_action_container_delete($SlideId, $LayerId)
+function _omega_sr_slider_action_container_delete($SlideId, $LayerId)
 {
     $delete_form = array(
         '#type' => 'submit',
@@ -605,12 +607,12 @@ function _hoteldiamond_slider_action_container_delete($SlideId, $LayerId)
             )
         ),
         '#submit' => array(
-            'hoteldiamond_sublayer_delete'
+            'omega_sr_sublayer_delete'
         )
     );
     return $delete_form;
 }
-function _hoteldiamond_slider_x($slx, $id_class)
+function _omega_sr_slider_x($slx, $id_class)
 {
     $x_form = array(
         '#type' => 'hidden',
@@ -624,7 +626,7 @@ function _hoteldiamond_slider_x($slx, $id_class)
     );
     return $x_form;
 }
-function _hoteldiamond_slider_y($sly, $id_class)
+function _omega_sr_slider_y($sly, $id_class)
 {
     $y_form = array(
         '#type' => 'hidden',
@@ -638,7 +640,7 @@ function _hoteldiamond_slider_y($sly, $id_class)
     );
     return $y_form;
 }
-function _hoteldiamond_slider_weight($options, $sublayer)
+function _omega_sr_slider_weight($options, $sublayer)
 {
     $weight_form = array(
         '#type' => 'select',
@@ -652,7 +654,7 @@ function _hoteldiamond_slider_weight($options, $sublayer)
     );
     return $weight_form;
 }
-function _hoteldiamond_slider_video_code($sublayer)
+function _omega_sr_slider_video_code($sublayer)
 {
     $video_code_form = array(
         '#type' => 'textfield',
@@ -666,7 +668,7 @@ function _hoteldiamond_slider_video_code($sublayer)
     );
     return $video_code_form;
 }
-function _hoteldiamond_slider_video_width($sublayer)
+function _omega_sr_slider_video_width($sublayer)
 {
     $video_width_form = array(
         '#type' => 'textfield',
@@ -682,7 +684,7 @@ function _hoteldiamond_slider_video_width($sublayer)
     );
     return $video_width_form;
 }
-function _hoteldiamond_slider_video_height($sublayer)
+function _omega_sr_slider_video_height($sublayer)
 {
     $video_height_form = array(
         '#type' => 'textfield',
@@ -698,7 +700,7 @@ function _hoteldiamond_slider_video_height($sublayer)
     );
     return $video_height_form;
 }
-function _hoteldiamond_slider_text_html($sublayer, $LayerId)
+function _omega_sr_slider_text_html($sublayer, $LayerId)
 {
     $text_html_form = array(
         '#type' => 'textarea',
@@ -720,7 +722,7 @@ function _hoteldiamond_slider_text_html($sublayer, $LayerId)
     );
     return $text_html_form;
 }
-function _hoteldiamond_slider_title($sublayer)
+function _omega_sr_slider_title($sublayer)
 {
     $title_form = array(
         '#type' => 'textfield',
@@ -729,7 +731,7 @@ function _hoteldiamond_slider_title($sublayer)
     );
     return $title_form;
 }
-function _hoteldiamond_slider_text_styles($arrStyles, $sublayer)
+function _omega_sr_slider_text_styles($arrStyles, $sublayer)
 {
     $styles_form = array(
         '#title' => t("Font style"),
@@ -747,7 +749,7 @@ function _hoteldiamond_slider_text_styles($arrStyles, $sublayer)
     );
     return $styles_form;
 }
-function _hoteldiamond_slider_image_upload_form($SlideId, $LayerId)
+function _omega_sr_slider_image_upload_form($SlideId, $LayerId)
 {
     $upload_image_form = array(
         '#type' => 'file',
@@ -756,7 +758,7 @@ function _hoteldiamond_slider_image_upload_form($SlideId, $LayerId)
     );
     return $upload_image_form;
 }
-function _hoteldiamond_slider_properties($sublayer, $SlideId, $LayerId, $arrAnimations, $arrEasing, $arrEndAnimations)
+function _omega_sr_slider_properties($sublayer, $SlideId, $LayerId, $arrAnimations, $arrEasing, $arrEndAnimations)
 {
     $properties_form = array(
         'animation' => array(
@@ -852,7 +854,7 @@ function _hoteldiamond_slider_properties($sublayer, $SlideId, $LayerId, $arrAnim
     );
     return $properties_form;
 }
-function _hoteldiamond_slider_image($sublayer)
+function _omega_sr_slider_image($sublayer)
 {
     $img_form = array();
     if (isset($sublayer['image']['path'])) {
@@ -864,7 +866,7 @@ function _hoteldiamond_slider_image($sublayer)
     }
     return $img_form;
 }
-function _hoteldiamond_slider_text_html_form($sublayer, $SlideId, $LayerId, $arrAnimations, $arrEasing, $arrEndAnimations, $id_class, $options, $slx, $sly, $arrStyles)
+function _omega_sr_slider_text_html_form($sublayer, $SlideId, $LayerId, $arrAnimations, $arrEasing, $arrEndAnimations, $id_class, $options, $slx, $sly, $arrStyles)
 {
     $complete_form = array(
         '#type' => 'fieldset',
@@ -876,19 +878,19 @@ function _hoteldiamond_slider_text_html_form($sublayer, $SlideId, $LayerId, $arr
         ),
         '#prefix' => '<div id="slider-' . $SlideId . '-layer-' . $LayerId . '-properties" class="layer-properties">',
         '#suffix' => '</div>',
-        'title' => _hoteldiamond_slider_title($sublayer),
-        'text-style' => _hoteldiamond_slider_text_styles($arrStyles, $sublayer),
-        'text-html' => _hoteldiamond_slider_text_html($sublayer, $LayerId),
-        'x' => _hoteldiamond_slider_x($slx, $id_class),
-        'y' => _hoteldiamond_slider_y($sly, $id_class),
-        'weight' => _hoteldiamond_slider_weight($options, $sublayer),
-        'properties' => _hoteldiamond_slider_properties($sublayer, $SlideId, $LayerId, $arrAnimations, $arrEasing, $arrEndAnimations),
-        'action_container' => _hoteldiamond_slider_action_container($SlideId, $LayerId),
-        'type' => _hoteldiamond_slider_type($sublayer)
+        'title' => _omega_sr_slider_title($sublayer),
+        'text-style' => _omega_sr_slider_text_styles($arrStyles, $sublayer),
+        'text-html' => _omega_sr_slider_text_html($sublayer, $LayerId),
+        'x' => _omega_sr_slider_x($slx, $id_class),
+        'y' => _omega_sr_slider_y($sly, $id_class),
+        'weight' => _omega_sr_slider_weight($options, $sublayer),
+        'properties' => _omega_sr_slider_properties($sublayer, $SlideId, $LayerId, $arrAnimations, $arrEasing, $arrEndAnimations),
+        'action_container' => _omega_sr_slider_action_container($SlideId, $LayerId),
+        'type' => _omega_sr_slider_type($sublayer)
     );
     return $complete_form;
 }
-function _hoteldiamond_slider_image_form($sublayer, $SlideId, $LayerId, $arrAnimations, $arrEasing, $arrEndAnimations, $id_class, $options, $slx, $sly)
+function _omega_sr_slider_image_form($sublayer, $SlideId, $LayerId, $arrAnimations, $arrEasing, $arrEndAnimations, $id_class, $options, $slx, $sly)
 {
     $complete_form = array(
         '#type' => 'fieldset',
@@ -900,19 +902,19 @@ function _hoteldiamond_slider_image_form($sublayer, $SlideId, $LayerId, $arrAnim
         ),
         '#prefix' => '<div id="slider-' . $SlideId . '-layer-' . $LayerId . '-properties" class="layer-properties">',
         '#suffix' => '</div>',
-        'title' => _hoteldiamond_slider_title($sublayer),
-        'x' => _hoteldiamond_slider_x($slx, $id_class),
-        'y' => _hoteldiamond_slider_y($sly, $id_class),
-        'weight' => _hoteldiamond_slider_weight($options, $sublayer),
-        'properties-image' => _hoteldiamond_slider_image_upload_form($SlideId, $LayerId),
-        'properties' => _hoteldiamond_slider_properties($sublayer, $SlideId, $LayerId, $arrAnimations, $arrEasing, $arrEndAnimations),
-        'image' => _hoteldiamond_slider_image($sublayer, $SlideId, $LayerId, $arrAnimations, $arrEasing, $arrEndAnimations, $id_class, $options, $slx, $sly),
-        'action_container' => _hoteldiamond_slider_action_container($SlideId, $LayerId),
-        'type' => _hoteldiamond_slider_type($sublayer)
+        'title' => _omega_sr_slider_title($sublayer),
+        'x' => _omega_sr_slider_x($slx, $id_class),
+        'y' => _omega_sr_slider_y($sly, $id_class),
+        'weight' => _omega_sr_slider_weight($options, $sublayer),
+        'properties-image' => _omega_sr_slider_image_upload_form($SlideId, $LayerId),
+        'properties' => _omega_sr_slider_properties($sublayer, $SlideId, $LayerId, $arrAnimations, $arrEasing, $arrEndAnimations),
+        'image' => _omega_sr_slider_image($sublayer, $SlideId, $LayerId, $arrAnimations, $arrEasing, $arrEndAnimations, $id_class, $options, $slx, $sly),
+        'action_container' => _omega_sr_slider_action_container($SlideId, $LayerId),
+        'type' => _omega_sr_slider_type($sublayer)
     );
     return $complete_form;
 }
-function _hoteldiamond_slider_video_form($sublayer, $SlideId, $LayerId, $arrAnimations, $arrEasing, $arrEndAnimations, $id_class, $options, $slx, $sly)
+function _omega_sr_slider_video_form($sublayer, $SlideId, $LayerId, $arrAnimations, $arrEasing, $arrEndAnimations, $id_class, $options, $slx, $sly)
 {
     $complete_form = array(
         '#type' => 'fieldset',
@@ -924,16 +926,16 @@ function _hoteldiamond_slider_video_form($sublayer, $SlideId, $LayerId, $arrAnim
         ),
         '#prefix' => '<div id="slider-' . $SlideId . '-layer-' . $LayerId . '-properties" class="layer-properties">',
         '#suffix' => '</div>',
-        'title' => _hoteldiamond_slider_title($sublayer),
-        'video-code' => _hoteldiamond_slider_video_code($sublayer),
-        'video-width' => _hoteldiamond_slider_video_width($sublayer),
-        'video-height' => _hoteldiamond_slider_video_height($sublayer),
-        'x' => _hoteldiamond_slider_x($slx, $id_class),
-        'y' => _hoteldiamond_slider_y($sly, $id_class),
-        'weight' => _hoteldiamond_slider_weight($options, $sublayer),
-        'properties' => _hoteldiamond_slider_properties($sublayer, $SlideId, $LayerId, $arrAnimations, $arrEasing, $arrEndAnimations),
-        'action_container' => _hoteldiamond_slider_action_container($SlideId, $LayerId),
-        'type' => _hoteldiamond_slider_type($sublayer)
+        'title' => _omega_sr_slider_title($sublayer),
+        'video-code' => _omega_sr_slider_video_code($sublayer),
+        'video-width' => _omega_sr_slider_video_width($sublayer),
+        'video-height' => _omega_sr_slider_video_height($sublayer),
+        'x' => _omega_sr_slider_x($slx, $id_class),
+        'y' => _omega_sr_slider_y($sly, $id_class),
+        'weight' => _omega_sr_slider_weight($options, $sublayer),
+        'properties' => _omega_sr_slider_properties($sublayer, $SlideId, $LayerId, $arrAnimations, $arrEasing, $arrEndAnimations),
+        'action_container' => _omega_sr_slider_action_container($SlideId, $LayerId),
+        'type' => _omega_sr_slider_type($sublayer)
     );
     return $complete_form;
 }
