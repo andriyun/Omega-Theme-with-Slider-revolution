@@ -24,7 +24,7 @@ function compareWeight($a, $b)
  */
 function omega_sr_preprocess_page(&$variables)
 {
-    if (theme_get_setting('slider-show', 'omega_sr') == "rev") {
+    if (theme_get_setting('slider-show', 'omega_sr')) {
 
     include 'js/rs-plugin/RevolutionSlider.build.inc';
   }

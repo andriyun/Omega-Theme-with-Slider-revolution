@@ -27,39 +27,22 @@ function omega_sr_form_system_theme_settings_alter(&$form, &$form_state)
     $form['favicon']['#collapsed']          = TRUE;
 
 
-    $form['alpha_settings']['general-settings']                       = array(
+    $form['alpha_settings']['slider-revolution']                       = array(
         '#type' => 'fieldset',
-        '#title' => t('General'),
-        '#weight' => -11,
+        '#title' => t('Slider revolution'),
     );
     // Breadcrumb elements
-    $form['alpha_settings']['general-settings']['slider-show']        = array(
+    $form['alpha_settings']['slider-revolution']['slider-show']        = array(
         '#type' => 'select',
-        '#title' => t('Select default slider'),
-        '#description' => t('Select front page slider'),
+        '#title' => t('Enable front page slider'),
         '#options' => array(
-            "rev" => t('Revolution Slider'),
-            "pan" => t('Panel Slider'),
-            "ref" => t('Refine Slider'),
-            "none" => t('None'),
+            "1" => t('Yes'),
+            "0" => t('No'),
         ),
         '#default_value' => theme_get_setting('slider-show', 'omega_sr')
     );
     include_once(drupal_get_path('theme', 'omega_sr') . '/js/rs-plugin/RevolutionSlider.slider.inc');
 
-    foreach ($form['alpha_settings'] as $key => $value) {
-        if (!is_array($value)) continue;
-        switch($key){
-/*            case 'general-settings':
-                $form['alpha_settings'][$key]['#access'] = user_access('slider revolution settings');
-                break;*/
-            default:
-                $form['alpha_settings'][$key]['#access'] = user_access('theme settings');
-        }
-    }
-    $form['favicon']['#access'] = user_access('theme settings');
-    $form['logo']['#access'] = user_access('theme settings');
-    $form['theme_settings']['#access'] = user_access('theme settings');
 }
 /* Settings form Validator */
 function omega_sr_settings_validate($form, &$form_state)

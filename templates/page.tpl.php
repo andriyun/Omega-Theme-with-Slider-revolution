@@ -9,9 +9,7 @@
     <?php print render($page['header']); ?>
   <?php endif; ?>
   <?php if(drupal_is_front_page()): ?>
-    <?php if (theme_get_setting('slider-show', 'omega_sr') == "rev"): ?>
     <?php print render($page['revslider']); ?>
-    <?php endif; ?>
   <?php endif; ?>
   <?php if (isset($page['content'])) : ?>
     <?php print render($page['content']); ?>

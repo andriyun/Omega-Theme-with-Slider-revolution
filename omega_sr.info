@@ -358,4 +358,4 @@ stylesheets[all][] = js/rs-plugin/css/settings.css
 scripts[] = js/rs-plugin/jquery.themepunch.plugins.min.js
 scripts[] = js/rs-plugin/jquery.themepunch.revolution.min.js
 
-settings[slider-show] = rev
+settings[slider-show] = 1
